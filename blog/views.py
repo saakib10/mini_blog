@@ -1,9 +1,11 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .forms import UserSignUpForm,UserLoginForm,AddPost
-from django.contrib.auth import login,logout,authenticate
+from .forms import UserSignUpForm,UserLoginForm,AddPost,EditProfileForm,ChangePassForm
+from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
 from django.contrib import messages
 from .models import Post
 from django.contrib.auth.models import Group
+
+
 def home_view(request):
     return render(request,'home.html')
 
@@ -35,7 +37,6 @@ def log_in(request):
                     if user is not None:
                         login(request,user)
                         messages.success(request,'Login Succesfully ')
-
                         return HttpResponseRedirect('/dashboard/')
             else:
                 lg = UserLoginForm()
@@ -84,21 +85,50 @@ def add_post(request):
 
 
 def update_post(request,id):
-    if request.method == 'POST':
-        up = Post.objects.get(pk=id)
-        update = AddPost(request.POST,instance=up)
-        if update.is_valid():
-            update.save()
-            return HttpResponseRedirect('/dashboard/')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            up = Post.objects.get(pk=id)
+            update = AddPost(request.POST,instance=up)
+            if update.is_valid():
+                update.save()
+                return HttpResponseRedirect('/dashboard/')
 
-    else:
-        up = Post.objects.get(pk=id)
-        update = AddPost(instance=up)
+        else:
+            up = Post.objects.get(pk=id)
+            update = AddPost(instance=up)
 
     return render(request,'updatepost.html',{'form': update})
 
 def delete_post(request,id):
+    if request.user.is_authenticated:
+            if request.method == 'POST':
+                dp = Post.objects.get(pk = id)
+                dp.delete()
+                return HttpResponseRedirect('/dashboard/')
+
+def user_profile(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            sp = EditProfileForm(request.POST,instance=request.user)
+            if sp.is_valid():
+                sp.save()
+                messages.success(request,'Your profile is Update .')
+                sa = EditProfileForm()
+        else:
+            sp = EditProfileForm(instance=request.user)
+        return render(request,'userprofile.html',{'form': sp})
+    else:
+        return HttpResponseRedirect('/login/')
+
+def change_password(request):
     if request.method == 'POST':
-        dp = Post.objects.get(pk = id)
-        dp.delete()
-        return HttpResponseRedirect('/dashboard/')
+        cp = ChangePassForm(user=request.user,data=request.POST)
+        if cp.is_valid():
+            cp.save()
+            update_session_auth_hash(request,cp.user)
+            messages.success(request, 'Your password is Changed .')
+            return HttpResponseRedirect('/cpass/')
+
+    else:
+        cp = ChangePassForm(user=request.user)
+    return render(request,'cpass.html',{'form': cp})

@@ -16,6 +16,7 @@
             <a class="nav-link" href="{% url 'about' %}">About</a>
       </li>
       {% endcomment %}
+
       <li class="nav-item">
             <a class="nav-link" href="{% url 'contact' %}">Contact</a>
       </li>
@@ -25,10 +26,14 @@
               <li class="nav-item">
                  <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
               </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'userprofile' %}">Edit Profile</a>
+                </li>
 
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               </li>
+
 
       {% else %}
 
@@ -40,6 +45,7 @@
                 <a class="nav-link" href="{% url 'login' %}">Login</a>
               </li>
       {% endif %}
+
 
 
 

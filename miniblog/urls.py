@@ -28,6 +28,8 @@ urlpatterns = [
     path('logout/',views.log_out,name = 'logout'),
     path('addpost/',views.add_post, name = 'addpost'),
     path('updatepost/<int:id>/',views.update_post, name = 'updatepost'),
-    path('deletepost/<int:id>/',views.delete_post, name = 'deletepost')
+    path('deletepost/<int:id>/',views.delete_post, name = 'deletepost'),
+    path('userprofile/',views.user_profile, name = 'userprofile'),
+    path('cpass/',views.change_password, name = 'cpass')
 
 ]

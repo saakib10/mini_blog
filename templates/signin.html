@@ -7,12 +7,14 @@
                 <h3 class="display-10 font-weight-bold">Sign Up Here</h3>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-10">
         {% if messages %}
         {% for message in messages %}
             <h2 class="mt-5 btn btn-secondary">{{ message }}</h2>
         {% endfor %}
         {% endif %}
+    </div>
+    <div class="col-sm-6">
         <form class="mt-5" action="" method="post" novalidate>
             {% csrf_token %}
             {% for fm in form %}
