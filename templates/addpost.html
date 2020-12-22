@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="col-sm-6">
+    {% if messages %}
+        {%  for mess in messages %}
+            {{ mess }}
+        {% endfor %}
+    {% endif %}
+            <h3 class="mt-5">Create Your Post</h3>
+
+            <form class="mt-5" method="post" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Post" class="btn btn-success">
+                <a href="{% url 'dashboard' %}" class="btn btn-warning">Back</a>
+            </form>
+    </div>
+
+{% endblock content %}

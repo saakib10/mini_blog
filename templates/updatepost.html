@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="col-sm-6">
+        <h3>Update Post</h3>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save" class="btn btn-success">
+            <a href="{% url 'dashboard' %}" class="btn btn-warning">Back</a>
+        </form>
+
+
+    </div>
+
+
+
+{% endblock content %}
