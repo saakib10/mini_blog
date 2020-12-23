@@ -29,7 +29,8 @@ urlpatterns = [
     path('addpost/',views.add_post, name = 'addpost'),
     path('updatepost/<int:id>/',views.update_post, name = 'updatepost'),
     path('deletepost/<int:id>/',views.delete_post, name = 'deletepost'),
-    path('userprofile/',views.user_profile, name = 'userprofile'),
-    path('cpass/',views.change_password, name = 'cpass')
+    path('editprofile/',views.edit_profile, name = 'editprofile'),
+    path('cpass/',views.change_password, name = 'cpass'),
+    path('userprofile/',views.user_profileee, name = 'userprofile')
 
 ]

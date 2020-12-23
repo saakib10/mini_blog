@@ -4,7 +4,7 @@
 {% block msg %}
     {% if messages %}
       {% for message in messages %}
-          <div class="mt-5">
+          <div class="">
               <div class="alert alert-warning alert-dismissible fade show" role="alert">
                   <strong>{{ message }}</strong>
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -18,25 +18,24 @@
 
 {% endblock msg %}
 
-{% block content %}
+{% block side %}
     <div class="col-sm-10">
         <div class="jumbotron justify-content-center">
-            <h2 class="display-10 font-weight-bold">Edit Profile</h2>
+            <h2 class="display-10 font-weight-bold">User Profile</h2>
         </div>
     </div>
 
 
 <div class="col-sm-6 form-group">
 
-    <form class="" method="post" action="" novalidate>
-        {% csrf_token %}
-        {% for fm in form %}
-            {{ fm.label_tag }}  {{ fm }} {{ fm.errors|striptags }}
-        {% endfor %}
-        <input class="mt-5 btn btn-success" type="submit" value="Save">
+        <h5>Username = {{ uname }}</h5>
+        <h5>First Name = {{ fname }}</h5>
+        <h5>Last Name = {{ lname }}</h5>
+        <h5>Email = {{ email }}</h5>
         <a href="{% url 'cpass' %}" class="mt-5 btn btn-warning">Edit Password</a>
+        <a href="{% url 'editprofile' %}" class="mt-5 btn btn-warning">Edit profile</a>
 
-    </form>
+
 </div>
 
 
@@ -45,4 +44,4 @@
 
 
 
-{% endblock content %}
+{% endblock side %}

@@ -12,9 +12,9 @@ def home_view(request):
 def dashboard(request):
    if request.user.is_authenticated:
         posts = Post.objects.all()
-        user = request.user
-        full_name = user.get_full_name()
-        return render(request,'dashboard.html',{'posts': posts,'name':full_name})
+        user = request.user.username
+
+        return render(request,'dashboard.html',{'posts': posts,'name':user})
    else:
        return HttpResponseRedirect('/login/')
 
@@ -106,17 +106,27 @@ def delete_post(request,id):
                 dp.delete()
                 return HttpResponseRedirect('/dashboard/')
 
-def user_profile(request):
+
+def user_profileee(request):
+    if request.user.is_authenticated:
+        uname = request.user.username
+        fname = request.user.first_name
+        lname = request.user.last_name
+        email = request.user.email
+        return render(request,'userprofile.html',{'uname': uname,'fname': fname,'lname': lname,'email':email})
+    else:
+        return HttpResponseRedirect('/login/')
+def edit_profile(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             sp = EditProfileForm(request.POST,instance=request.user)
             if sp.is_valid():
                 sp.save()
                 messages.success(request,'Your profile is Update .')
-                sa = EditProfileForm()
+                return HttpResponseRedirect('/userprofile/')
         else:
             sp = EditProfileForm(instance=request.user)
-        return render(request,'userprofile.html',{'form': sp})
+        return render(request,'editprofile.html',{'form': sp})
     else:
         return HttpResponseRedirect('/login/')
 
